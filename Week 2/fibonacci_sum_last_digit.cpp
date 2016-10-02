@@ -1,25 +1,49 @@
 #include <iostream>
 
-int fibonacci_sum_naive(long long n) {
+/* This program will get the last digit of the Nth Fibonacci number
+ * It uses modulo properties to make it fast and simple */
+ 
+// This is the naive, brute force of getting the last digit (NOT RECOMMENDED!)
+int get_fibonacci_last_digit_naive(int n) {
     if (n <= 1)
         return n;
 
-    long long previous = 0;
-    long long current  = 1;
-    long long sum      = 1;
+    int previous = 0;
+    int current  = 1;
 
-    for (long long i = 0; i < n - 1; ++i) {
-        long long tmp_previous = previous;
+    for (int i = 0; i < n - 1; ++i) {
+        int tmp_previous = previous;
         previous = current;
         current = tmp_previous + current;
-        sum += current;
     }
 
-    return sum % 10;
+    return current % 10;
+}
+
+// This function will get the last digit of the Nth Fibonacci number using modulo properties
+// https://en.wikipedia.org/wiki/Modular_arithmetic
+int get_fibonacci_last_digit_fast(int n) {
+    if (n <= 1)
+        return n;
+
+    int previous = 0;
+    int current  = 1;
+
+    for (int i = 0; i < n - 1; ++i) {
+        int tmp_previous = previous;
+        previous = current;
+        current = (tmp_previous % 10) + (current % 10);
+    }
+
+    return current % 10;
 }
 
 int main() {
-    long long n = 0;
+    int n;
     std::cin >> n;
-    std::cout << fibonacci_sum_naive(n);
-}
+    int c = get_fibonacci_last_digit_fast(n);
+    std::cout << c << '\n';
+//    c = get_fibonacci_last_digit_naive(n);
+//    std::cout << c << '\n';
+
+    }
